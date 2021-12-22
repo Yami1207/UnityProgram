@@ -8,8 +8,6 @@ public class GenerateCloudWizard : ScriptableWizard
     public int width = 256;
     public int height = 256;
 
-    public bool is_png_format = false;
-
     /// <summary>
     /// 云稀疏度
     /// </summary>
@@ -22,7 +20,7 @@ public class GenerateCloudWizard : ScriptableWizard
     [Range(0.0f, 1.0f)]
     public float cloud_sharpness = 0.7f;
 
-    public string out_file = "";
+    public string tex_file = "";
 
     [MenuItem("Tools/Cloud/Generate Texture")]
     static void GenerateCloudTexture()
@@ -33,13 +31,14 @@ public class GenerateCloudWizard : ScriptableWizard
     void OnWizardUpdate()
     {
         helpString = "Generate Cloud Texture.";
-        isValid = (width > 0) && (height > 0) && out_file.Length != 0;
+        isValid = (width > 0) && (height > 0) && tex_file.Length != 0;
     }
 
     void OnWizardCreate()
     {
-        string _file = Application.dataPath + "/Scripts/Environment/" + out_file;
+        string _file = string.Format("{0}/{1}", Application.dataPath, tex_file);
         this.GenerateCloud(_file);
+        AssetDatabase.Refresh();
     }
 
     private void GenerateCloud(string _file)
@@ -76,22 +75,14 @@ public class GenerateCloudWizard : ScriptableWizard
         }
 
         // 创建云纹理对象
-        Texture2D _cloud_texture = new Texture2D(width, height, TextureFormat.ARGB32, false);
+        Texture2D _cloud_texture = new Texture2D(width, height, TextureFormat.R8, false);
         _cloud_texture.filterMode = FilterMode.Bilinear;
         _cloud_texture.wrapMode = TextureWrapMode.Repeat;
         _cloud_texture.SetPixels(_texture_pixels);
         _cloud_texture.Apply(false, false);
 
-        // 导出纹理数据
-        if (is_png_format)
-        {
-            byte[] bytes = _cloud_texture.EncodeToPNG();
-            System.IO.File.WriteAllBytes(_file + ".png", bytes);
-        }
-        else
-        {
-            byte[] bytes = _cloud_texture.EncodeToJPG();
-            System.IO.File.WriteAllBytes(_file + ".jpg", bytes);
-        }
+        // 导出贴图
+        byte[] bytes = _cloud_texture.EncodeToPNG();
+        System.IO.File.WriteAllBytes(_file + ".png", bytes);
     }
 }

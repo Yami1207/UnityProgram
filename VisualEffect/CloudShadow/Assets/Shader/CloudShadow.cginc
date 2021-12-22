@@ -18,9 +18,6 @@ uniform sampler2D g_CloudShadowTexture;
 // 计算云影值
 inline half3 MixCloudShadow(half3 color, float3 positionWS)
 {
-	//float2 uv = (1 + world_pos.xz * _CloudShadowOneOverTile.xy) * 0.5;
-	//uv.y = 1 - uv.y;
-
 	// 根据像素世界坐标计算UV值
 	float2 uv = positionWS.xz * g_CloudShadowTile.xy - _Time.y * g_CloudShadowVelocity.xz;
 
@@ -31,7 +28,7 @@ inline half3 MixCloudShadow(half3 color, float3 positionWS)
 	return color * lerp(1.0, g_CloudShadowColor.rgb, thickness);
 }
 
-#define MIX_CLOUD_SHADOW(color, positionWS)	MixCloudShadow(color, positionWS)
+#define MIX_CLOUD_SHADOW(color, positionWS)	color.rgb = MixCloudShadow(color, positionWS)
 #else
 #define MIX_CLOUD_SHADOW(color, positionWS) 
 #endif

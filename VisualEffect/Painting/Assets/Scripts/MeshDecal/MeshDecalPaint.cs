@@ -68,6 +68,8 @@ namespace Painting
 
         private PaintParams m_Parameters;
 
+        #region Mono Behaviour
+
         private void Awake()
         {
             if (m_MaxPaints > 0)
@@ -130,6 +132,8 @@ namespace Painting
             for (int i = 0; i < m_Tasks.Length; ++i)
                 m_Tasks[i].OnDestroy();
         }
+
+        #endregion
 
         public void Tick(float time)
         {

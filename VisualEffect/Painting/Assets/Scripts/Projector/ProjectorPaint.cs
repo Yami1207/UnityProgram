@@ -32,10 +32,10 @@ namespace Painting
         /// </summary>
         private GameObject[] m_PaintPool;
 
+        #region Mono Behaviour
+
         private void Awake()
         {
-            Core.instance.SetInterface(this);
-
             if (m_MaxPaints > 0)
             {
                 m_PaintPool = new GameObject[m_MaxPaints];
@@ -48,10 +48,17 @@ namespace Painting
             }
         }
 
+        private void OnEnable()
+        {
+            Core.instance.SetInterface(this);
+        }
+
         private void OnDisable()
         {
             Core.instance.SetInterface(null);
         }
+
+        #endregion
 
         public void Create(Vector3 pos, Quaternion rotation, Vector3 forward, System.Action<GameObject> callback)
         {

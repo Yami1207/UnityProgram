@@ -307,6 +307,7 @@ GameObject:
   - component: {fileID: 495237296}
   - component: {fileID: 495237295}
   - component: {fileID: 495237294}
+  - component: {fileID: 495237297}
   m_Layer: 8
   m_Name: Terrain
   m_TagString: Untagged
@@ -387,6 +388,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 495237292}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &495237297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 495237292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a0979175ea3f434b89860dc8bb01b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!21 &707532125
 Material:
   serializedVersion: 6
@@ -1093,54 +1107,3 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1995234838}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &2074050919
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2074050923}
-  - component: {fileID: 2074050920}
-  m_Layer: 0
-  m_Name: MeshDecalPaint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2074050920
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2074050919}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88766c03fb106ef48823c001dacd86ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_UseOfflineData: 1
-  m_PaintLayer:
-    serializedVersion: 2
-    m_Bits: 264
-  m_FaceCullingOffset: 0.01
-  m_PositionOffset: 0.01
-  m_PaintMaterial: {fileID: 2100000, guid: 7d456bec673edfe4d9c0b6f48098c9bd, type: 2}
-  m_MaxPaints: 2
---- !u!4 &2074050923
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2074050919}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

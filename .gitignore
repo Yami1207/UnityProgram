@@ -1,9 +1,13 @@
 *.csproj
 *.sln
 .vs
+.vsconfig
 VisualEffect/CloudShadow/Library
 VisualEffect/CloudShadow/Logs
 VisualEffect/CloudShadow/Packages
+VisualEffect/CloudShadow/obj
+VisualEffect/CloudShadow/Temp
+VisualEffect/CloudShadow/UserSettings
 VisualEffect/Painting/Library
 VisualEffect/Painting/Logs
 VisualEffect/Painting/Packages

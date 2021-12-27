@@ -17,34 +17,18 @@ namespace Painting
         private GameObject m_PaintPrefab;
 
         /// <summary>
-        /// 喷漆最大数
+        /// 喷漆对象
         /// </summary>
-        [SerializeField]
-        private int m_MaxPaints = 1;
-
-        /// <summary>
-        /// 下次激活喷漆索引
-        /// </summary>
-        private int m_NextPaint = 0;
-
-        /// <summary>
-        /// 喷漆对象缓冲池
-        /// </summary>
-        private GameObject[] m_PaintPool;
+        private GameObject m_PaintObject;
 
         #region Mono Behaviour
 
         private void Awake()
         {
-            if (m_MaxPaints > 0)
+            if (m_PaintPrefab != null)
             {
-                m_PaintPool = new GameObject[m_MaxPaints];
-                for (int i = 0; i < m_PaintPool.Length; ++i)
-                {
-                    GameObject obj = GameObject.Instantiate(m_PaintPrefab, this.transform);
-                    obj.SetActive(false);
-                    m_PaintPool[i] = obj;
-                }
+                m_PaintObject = GameObject.Instantiate(m_PaintPrefab, this.transform);
+                m_PaintObject.SetActive(false);
             }
         }
 
@@ -62,25 +46,19 @@ namespace Painting
 
         public void Create(Vector3 pos, Quaternion rotation, Vector3 forward, System.Action<GameObject> callback)
         {
-            if (m_MaxPaints <= 0 || m_PaintPool == null)
-                return;
+            if (m_PaintObject != null)
+            {
+                m_PaintObject.SetActive(true);
+                m_PaintObject.transform.position = pos;
+                m_PaintObject.transform.rotation = rotation;
 
-            if (m_PaintPool[m_NextPaint] == null)
-                return;
+                Projector projector = m_PaintObject.GetComponent<Projector>();
+                if (projector != null && projector.material != null)
+                    projector.material.SetVector(RAY_NORMAL_ID, forward);
 
-            var paint = m_PaintPool[m_NextPaint];
-            paint.SetActive(true);
-            paint.transform.position = pos;
-            paint.transform.rotation = rotation;
-
-            Projector projector = paint.GetComponent<Projector>();
-            if (projector != null && projector.material != null)
-                projector.material.SetVector(RAY_NORMAL_ID, forward);
-
-            m_NextPaint = (++m_NextPaint) % m_MaxPaints;
-
-            if (callback != null)
-                callback.Invoke(paint);
+                if (callback != null)
+                    callback.Invoke(m_PaintObject);
+            }
         }
 
         public void Tick(float time)
@@ -89,9 +67,8 @@ namespace Painting
 
         public void Clear()
         {
-            // 隐藏喷漆对象
-            for (int i = 0; i < m_PaintPool.Length; ++i)
-                m_PaintPool[i].SetActive(false);
+            if (m_PaintObject != null)
+                m_PaintObject.SetActive(false);
         }
     }
 }

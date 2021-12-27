@@ -51,13 +51,9 @@ namespace Painting
         /// <param name="renderer"></param>
         private void GenerateMesh(MeshRenderer renderer)
         {
-            var vertexPool = m_Cache.vertexPool;
-            var indexPool = m_Cache.indexPool;
-            var polygonPool = m_Cache.polygonPool;
-
-            // 清除缓存数据
-            vertexPool.Clear();
-            indexPool.Clear();
+            List<Vector3> vertexPool = ListPool<Vector3>.Get();
+            List<int> indexPool = ListPool<int>.Get();
+            List<Vector3> polygonPool = ListPool<Vector3>.Get();
 
             var mesh = renderer.GetComponent<MeshFilter>().sharedMesh;
             mesh.GetVertices(vertexPool);
@@ -88,6 +84,10 @@ namespace Painting
 
                 polygonPool.Clear();
             }
+
+            ListPool<Vector3>.Release(vertexPool);
+            ListPool<int>.Release(indexPool);
+            ListPool<Vector3>.Release(polygonPool);
         }
 
         /// <summary>

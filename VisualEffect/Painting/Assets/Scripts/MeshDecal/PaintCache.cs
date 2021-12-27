@@ -25,10 +25,5 @@ namespace Painting
         public readonly List<Vector3> normals = new List<Vector3>();
         public readonly List<Vector2> texcoords = new List<Vector2>();
         public readonly List<int> indices = new List<int>();
-
-        // 获取Mesh缓存数据
-        public readonly List<Vector3> vertexPool = new List<Vector3>();
-        public readonly List<int> indexPool = new List<int>();
-        public readonly List<Vector3> polygonPool = new List<Vector3>();
     }
 }

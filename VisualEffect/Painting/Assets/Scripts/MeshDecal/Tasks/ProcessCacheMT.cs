@@ -50,10 +50,11 @@ namespace Painting
         /// <param name="buffer"></param>
         private void GenerateMesh(Matrix4x4 transform, SceneMeshTree.MeshBuffer buffer)
         {
+            List<Vector3> polygonPool = ListPool<Vector3>.Get();
+
             // 转换到喷漆对象本地坐标
             var tranfosmMatrix = m_Cache.paintWorldToLocal * transform;
             var vertices = buffer.vertices;
-            var polygonPool = m_Cache.polygonPool;
 
             for (int i = 0; i < buffer.subMeshCount; ++i)
             {
@@ -79,6 +80,8 @@ namespace Painting
                     polygonPool.Clear();
                 }
             }
+
+            ListPool<Vector3>.Release(polygonPool);
         }
 
         /// <summary>

@@ -38,7 +38,8 @@ namespace Painting
 
         private void OnWillRenderObject()
         {
-            
+            Camera camera = Camera.current;
+            CommandBuffer buffer = null;
         }
 
         #endregion

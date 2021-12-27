@@ -41,23 +41,12 @@ namespace Painting
         [SerializeField]
         private Material m_PaintMaterial;
 
-        /// <summary>
-        /// 喷漆最大数
-        /// </summary>
-        [SerializeField]
-        private int m_MaxPaints = 1;
-
         private bool m_IsInitialized = false;
 
         /// <summary>
-        /// 下次激活喷漆索引
+        /// 喷漆对象
         /// </summary>
-        private int m_NextPaint = 0;
-
-        /// <summary>
-        /// 喷漆对象缓冲池
-        /// </summary>
-        private GameObject[] m_PaintPool;
+        private GameObject m_PaintObject;
 
         private PaintTask[] m_Tasks = new PaintTask[(int)TaskType.MaxTask];
 
@@ -72,21 +61,12 @@ namespace Painting
 
         private void Awake()
         {
-            if (m_MaxPaints > 0)
-            {
-                m_PaintPool = new GameObject[m_MaxPaints];
-                for (int i = 0; i < m_PaintPool.Length; ++i)
-                {
-                    GameObject obj = new GameObject();
-                    obj.transform.parent = this.transform;
-
-                    obj.AddComponent<MeshFilter>();
-                    var renderer = obj.AddComponent<MeshRenderer>();
-                    renderer.sharedMaterial = m_PaintMaterial;
-                    renderer.enabled = false;
-                    m_PaintPool[i] = obj;
-                }
-            }
+            m_PaintObject = new GameObject();
+            m_PaintObject.transform.parent = this.transform;
+            m_PaintObject.AddComponent<MeshFilter>();
+            var renderer = m_PaintObject.AddComponent<MeshRenderer>();
+            renderer.sharedMaterial = m_PaintMaterial;
+            renderer.enabled = false;
 
             // 初始化Cache对象
             m_Cache.paintSize = new Vector3(m_PaintSize, m_PaintSize, m_PaintSize);
@@ -177,6 +157,7 @@ namespace Painting
 
         public void Create(Vector3 pos, Quaternion rotation, Vector3 forward, System.Action<GameObject> callback)
         {
+            Debug.Assert(m_PaintObject != null);
             m_Queue.Enqueue(pos, rotation, forward, this.StartPaintFromQueue, callback);
         }
 
@@ -188,21 +169,23 @@ namespace Painting
         {
             m_Parameters = p;
 
-            if (m_PaintPool[m_NextPaint] != null)
-            {
-                var target = m_PaintPool[m_NextPaint];
-                target.transform.position = p.position;
-                target.transform.rotation = p.rotation;
-                m_NextPaint = (++m_NextPaint) % m_MaxPaints;
+            m_PaintObject.transform.position = p.position;
+            m_PaintObject.transform.rotation = p.rotation;
+            m_Cache.paintObject = m_PaintObject;
+            m_Cache.paintWorldToLocal = m_PaintObject.transform.worldToLocalMatrix;
 
-                m_Cache.paintObject = target;
-                m_Cache.paintWorldToLocal = target.transform.worldToLocalMatrix;
-            }
-            else
-            {
-                m_Cache.paintObject = null;
-                m_Cache.paintWorldToLocal = Matrix4x4.identity;
-            }
+            //if (m_PaintObject != null)
+            //{
+            //    m_PaintObject.transform.position = p.position;
+            //    m_PaintObject.transform.rotation = p.rotation;
+            //    m_Cache.paintObject = m_PaintObject;
+            //    m_Cache.paintWorldToLocal = m_PaintObject.transform.worldToLocalMatrix;
+            //}
+            //else
+            //{
+            //    m_Cache.paintObject = null;
+            //    m_Cache.paintWorldToLocal = Matrix4x4.identity;
+            //}
 
             m_Cache.paintPoint = p.position;
 #if UNITY_EDITOR

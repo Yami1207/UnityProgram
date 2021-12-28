@@ -155,10 +155,10 @@ namespace Painting
             return TaskType.None;
         }
 
-        public void Create(Vector3 pos, Quaternion rotation, Vector3 forward, System.Action<GameObject> callback)
+        public void Create(Vector3 pos, Quaternion rotation, Vector3 forward)
         {
             Debug.Assert(m_PaintObject != null);
-            m_Queue.Enqueue(pos, rotation, forward, this.StartPaintFromQueue, callback);
+            m_Queue.Enqueue(pos, rotation, forward, this.StartPaintFromQueue, null);
         }
 
         public void Clear()

@@ -13,12 +13,16 @@ namespace Painting
         [SerializeField]
         private Material m_Material;
 
+        private bool m_HasPaint = false;
+        private Matrix4x4 m_Transform = Matrix4x4.identity;
+
         private readonly Dictionary<Camera, CommandBuffer> m_Cameras = new Dictionary<Camera, CommandBuffer>();
 
         #region Mono Behaviour
 
         private void OnEnable()
         {
+            m_HasPaint = false;
             Core.instance.SetInterface(this);
         }
 
@@ -30,7 +34,10 @@ namespace Painting
             while (iter.MoveNext())
             {
                 if (iter.Current.Key != null)
+                {
+                    iter.Current.Key.forceIntoRenderTexture = false;
                     iter.Current.Key.RemoveCommandBuffer(CameraEvent.BeforeForwardAlpha, iter.Current.Value);
+                }
             }
             iter.Dispose();
             m_Cameras.Clear();
@@ -38,8 +45,28 @@ namespace Painting
 
         private void OnWillRenderObject()
         {
+            if (!m_HasPaint)
+                return;
+
             Camera camera = Camera.current;
+            if (camera == null) return;
             CommandBuffer buffer = null;
+            if (!m_Cameras.TryGetValue(camera, out buffer))
+            {
+                camera.forceIntoRenderTexture = true;
+
+                buffer = new CommandBuffer();
+                buffer.name = "Decal Painting";
+                camera.AddCommandBuffer(CameraEvent.BeforeForwardAlpha, buffer);
+
+                m_Cameras.Add(camera, buffer);
+            }
+            else
+            {
+                buffer.Clear();
+            }
+
+            buffer.DrawMesh(m_Mesh, m_Transform, m_Material);
         }
 
         #endregion
@@ -50,13 +77,18 @@ namespace Painting
         {
         }
 
-        public void Create(Vector3 pos, Quaternion rotation, Vector3 forward, System.Action<GameObject> callback)
+        public void Create(Vector3 pos, Quaternion rotation, Vector3 forward)
         {
-
+            if (m_Mesh != null && m_Material != null)
+            {
+                m_Transform.SetTRS(pos, rotation, Vector3.one);
+                m_HasPaint = true;
+            }
         }
 
         public void Clear()
         {
+            m_HasPaint = false;
         }
 
         #endregion

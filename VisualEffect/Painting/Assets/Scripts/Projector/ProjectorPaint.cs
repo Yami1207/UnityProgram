@@ -44,7 +44,7 @@ namespace Painting
 
         #endregion
 
-        public void Create(Vector3 pos, Quaternion rotation, Vector3 forward, System.Action<GameObject> callback)
+        public void Create(Vector3 pos, Quaternion rotation, Vector3 forward)
         {
             if (m_PaintObject != null)
             {
@@ -55,9 +55,6 @@ namespace Painting
                 Projector projector = m_PaintObject.GetComponent<Projector>();
                 if (projector != null && projector.material != null)
                     projector.material.SetVector(RAY_NORMAL_ID, forward);
-
-                if (callback != null)
-                    callback.Invoke(m_PaintObject);
             }
         }
 

@@ -22,10 +22,10 @@ namespace Painting
         /// <param name="rotation">喷漆对象朝向</param>
         /// <param name="forward">喷漆对象向上方向</param>
         /// <param name="callback">创建成功回调函数</param>
-        public void CreatePaint(Vector3 pos, Quaternion rotation, Vector3 forward, System.Action<GameObject> callback)
+        public void CreatePaint(Vector3 pos, Quaternion rotation, Vector3 forward)
         {
             if (m_Interface != null)
-                m_Interface.Create(pos, rotation, forward, callback);
+                m_Interface.Create(pos, rotation, forward);
         }
 
         public void Clear()

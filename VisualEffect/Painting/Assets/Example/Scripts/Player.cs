@@ -105,7 +105,7 @@ public class Player : MonoBehaviour
                     Vector3 dir = ray.direction;
 
                     Vector3 up = Vector3.Normalize(Vector3.Cross(dir, this.transform.right));
-                    Painting.Core.instance.CreatePaint(pos, Quaternion.LookRotation(dir, up), dir, null);
+                    Painting.Core.instance.CreatePaint(pos, Quaternion.LookRotation(dir, up), dir);
                 }
                 else
                 {
@@ -113,7 +113,7 @@ public class Player : MonoBehaviour
                     Vector3 pos = raycastHit.point + ratio * raycastHit.normal;
                     Vector3 dir = -raycastHit.normal;
                     Vector3 up = Vector3.Normalize(Vector3.Cross(dir, this.transform.right));
-                    Painting.Core.instance.CreatePaint(pos, Quaternion.LookRotation(dir, up), dir, null);
+                    Painting.Core.instance.CreatePaint(pos, Quaternion.LookRotation(dir, up), dir);
                 }
             }
         }

@@ -12,8 +12,7 @@ namespace Painting
         /// <param name="pos"></param>
         /// <param name="rotation"></param>
         /// <param name="forward"></param>
-        /// <param name="callback"></param>
-        void Create(Vector3 pos, Quaternion rotation, Vector3 forward, System.Action<GameObject> callback);
+        void Create(Vector3 pos, Quaternion rotation, Vector3 forward);
 
         void Clear();
     }

@@ -1,0 +1,18 @@
+#version 330
+uniform sampler2D _StencilMaskTex;
+in vec2 vs_TEXCOORD0;
+layout(location = 0) out vec4 SV_Target0;
+vec4 u_xlat16_0;
+bool u_xlatb0;
+float u_xlat1;
+void main(){
+(u_xlat16_0 = texture(_StencilMaskTex, vs_TEXCOORD0.xy));
+(u_xlat1 = (u_xlat16_0.x + -0.5));
+(SV_Target0 = u_xlat16_0);
+(u_xlatb0 = (u_xlat1 < 0.0));
+if (((int(u_xlatb0) * -1) != 0))
+{
+discard;
+}
+return ;
+}

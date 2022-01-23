@@ -1,0 +1,31 @@
+#version 330
+uniform vec4 _LinearFogColor;
+uniform vec4 _LinearFogParams;
+uniform vec3 _XGlobalCharOutlineColor;
+uniform float _OutlineBloom;
+uniform vec4 _OutlineColor;
+uniform float _XOutlineBrightness;
+in float vs_TEXCOORD0;
+in vec4 vs_TEXCOORD2;
+layout(location = 0) out vec4 SV_Target0;
+vec4 u_xlat0;
+bool u_xlatb0;
+vec4 u_xlat1;
+vec3 u_xlat2;
+void main(){
+(u_xlat0.x = (vs_TEXCOORD2.z + -0.1));
+(u_xlatb0 = (u_xlat0.x < 0.0));
+if (((int(u_xlatb0) * -1) != 0))
+{
+discard;
+}
+(u_xlat0.x = max(vs_TEXCOORD0, 0.0));
+(u_xlat0.x = ((u_xlat0.x * _LinearFogParams.x) + _LinearFogParams.y));
+(u_xlat0.x = clamp(u_xlat0.x, 0.0, 1.0));
+(u_xlat2.xyz = (_OutlineColor.xyz * vec3(_XOutlineBrightness)));
+(u_xlat1.xyz = ((u_xlat2.xyz * _XGlobalCharOutlineColor.xyz) + (-_LinearFogColor.xyz)));
+(u_xlat1.w = ((-_LinearFogColor.w) + _OutlineBloom));
+(u_xlat0 = ((u_xlat0.xxxx * u_xlat1) + _LinearFogColor));
+(SV_Target0 = u_xlat0);
+return ;
+}

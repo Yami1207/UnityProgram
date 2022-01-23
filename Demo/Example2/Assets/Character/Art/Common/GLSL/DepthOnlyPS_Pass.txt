@@ -1,0 +1,13 @@
+#version 330
+in vec2 vs_TEXCOORD0;
+layout(location = 0) out vec4 SV_Target0;
+vec4 u_xlat0;
+void main(){
+(u_xlat0.x = (vs_TEXCOORD0.x / vs_TEXCOORD0.y));
+(u_xlat0.x = ((u_xlat0.x * 0.5) + 0.5));
+(u_xlat0 = (u_xlat0.xxxx * vec4(1.0, 255.0, 65025.0, 16581375.0)));
+(u_xlat0 = fract(u_xlat0));
+(u_xlat0 = (((-u_xlat0.yzww) * vec4(0.0039215689, 0.0039215689, 0.0039215689, 0.0039215689)) + u_xlat0));
+(SV_Target0 = u_xlat0);
+return ;
+}

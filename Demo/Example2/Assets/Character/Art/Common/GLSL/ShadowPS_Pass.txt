@@ -1,0 +1,18 @@
+#version 330
+uniform float _GlobalShadowIntensity;
+uniform vec4 _MeshShadowColor;
+in vec4 vs_TEXCOORD0;
+layout(location = 0) out vec4 SV_Target0;
+float u_xlat0;
+bool u_xlatb0;
+void main(){
+(u_xlatb0 = (vs_TEXCOORD0.w < 0.0));
+if (((int(u_xlatb0) * -1) != 0))
+{
+discard;
+}
+(u_xlat0 = (_GlobalShadowIntensity * _MeshShadowColor.w));
+(SV_Target0.xyz = (vec3(u_xlat0) * _MeshShadowColor.xyz));
+(SV_Target0.w = u_xlat0);
+return ;
+}

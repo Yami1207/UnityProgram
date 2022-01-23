@@ -1,0 +1,114 @@
+#version 330
+uniform vec4 hlslcc_mtx4x4unity_ObjectToWorld[4];
+uniform vec4 hlslcc_mtx4x4unity_MatrixVP[4];
+uniform vec3 _XSkyMieColor;
+uniform vec3 _XSkyRayleighColor;
+uniform vec3 _XSkySunSkyColor;
+uniform vec3 _XSkyLocalSunDirection;
+uniform vec4 _XSkySun;
+uniform vec4 _XSky4PI;
+uniform vec4 _XSkyRadius;
+uniform vec4 _XSkyScale;
+in vec4 in_POSITION0;
+out vec3 vs_TEXCOORD0;
+out vec3 vs_TEXCOORD1;
+out vec3 vs_TEXCOORD2;
+vec4 u_xlat0;
+vec4 u_xlat1;
+vec3 u_xlat2;
+float u_xlat3;
+float u_xlat4;
+float u_xlat6;
+float u_xlat9;
+void main(){
+(u_xlat0 = (in_POSITION0.yyyy * hlslcc_mtx4x4unity_ObjectToWorld[1]));
+(u_xlat0 = ((hlslcc_mtx4x4unity_ObjectToWorld[0] * in_POSITION0.xxxx) + u_xlat0));
+(u_xlat0 = ((hlslcc_mtx4x4unity_ObjectToWorld[2] * in_POSITION0.zzzz) + u_xlat0));
+(u_xlat0 = (u_xlat0 + hlslcc_mtx4x4unity_ObjectToWorld[3]));
+(u_xlat1 = (u_xlat0.yyyy * hlslcc_mtx4x4unity_MatrixVP[1].xyww));
+(u_xlat1 = ((hlslcc_mtx4x4unity_MatrixVP[0].xyww * u_xlat0.xxxx) + u_xlat1));
+(u_xlat1 = ((hlslcc_mtx4x4unity_MatrixVP[2].xyww * u_xlat0.zzzz) + u_xlat1));
+(gl_Position = ((hlslcc_mtx4x4unity_MatrixVP[3].xyww * u_xlat0.wwww) + u_xlat1));
+
+(u_xlat0.x = dot(in_POSITION0.xyz, in_POSITION0.xyz));
+(u_xlat0.x = inversesqrt(u_xlat0.x));
+(u_xlat0.xyz = (u_xlat0.xxx * in_POSITION0.xyz));
+(vs_TEXCOORD0.xyz = u_xlat0.xyz);
+
+(u_xlat0.w = max(u_xlat0.y, 0.0));
+(u_xlat3 = dot(u_xlat0.xzw, u_xlat0.xzw));
+(u_xlat3 = inversesqrt(u_xlat3));
+(u_xlat0.xyz = (vec3(u_xlat3) * u_xlat0.xwz));
+
+(u_xlat9 = (u_xlat0.y * u_xlat0.y));
+(u_xlat9 = ((u_xlat9 * _XSkyRadius.y) + _XSkyRadius.w));
+(u_xlat9 = (u_xlat9 + (-_XSkyRadius.y)));
+(u_xlat9 = sqrt(u_xlat9));
+(u_xlat9 = (((-_XSkyRadius.x) * u_xlat0.y) + u_xlat9));
+
+(u_xlat1.xyz = (vec3(u_xlat9) * u_xlat0.xyz));
+(u_xlat9 = (u_xlat9 * _XSkyScale.x));
+(u_xlat2.x = 0.0);
+(u_xlat2.z = 0.0);
+(u_xlat2.y = (_XSkyRadius.x + _XSkyScale.w));
+(u_xlat1.xyz = ((u_xlat1.xyz * vec3(0.5, 0.5, 0.5)) + u_xlat2.xyz));
+(u_xlat0.x = dot(u_xlat0.xyz, u_xlat1.xyz));
+
+(u_xlat3 = (u_xlat0.y * u_xlat2.y));
+(u_xlat3 = (u_xlat3 / u_xlat2.y));
+(u_xlat3 = ((-u_xlat3) + 1.0));
+
+(u_xlat6 = dot(u_xlat1.xyz, u_xlat1.xyz));
+(u_xlat1.x = dot(_XSkyLocalSunDirection.xyz, u_xlat1.xyz));
+(u_xlat6 = sqrt(u_xlat6));
+(u_xlat6 = max(u_xlat6, 1.0));
+(u_xlat4 = (1.0 / u_xlat6));
+(u_xlat6 = ((-u_xlat6) + _XSkyRadius.x));
+(u_xlat6 = (u_xlat6 * _XSkyScale.z));
+(u_xlat6 = (u_xlat6 * 1.442695));
+(u_xlat6 = exp2(u_xlat6));
+(u_xlat0.x = (((-u_xlat0.x) * u_xlat4) + 1.0));
+(u_xlat1.x = (((-u_xlat1.x) * u_xlat4) + 1.0));
+
+(u_xlat4 = ((u_xlat0.x * 5.25) + -6.8000002));
+(u_xlat4 = ((u_xlat0.x * u_xlat4) + 3.8299999));
+(u_xlat4 = ((u_xlat0.x * u_xlat4) + 0.45899999));
+(u_xlat0.x = ((u_xlat0.x * u_xlat4) + -0.00287));
+(u_xlat0.x = (u_xlat0.x * 1.442695));
+(u_xlat0.x = exp2(u_xlat0.x));
+(u_xlat0.x = (u_xlat0.x * 0.25));
+
+(u_xlat4 = ((u_xlat1.x * 5.25) + -6.8000002));
+(u_xlat4 = ((u_xlat1.x * u_xlat4) + 3.8299999));
+(u_xlat4 = ((u_xlat1.x * u_xlat4) + 0.45899999));
+(u_xlat1.x = ((u_xlat1.x * u_xlat4) + -0.00287));
+(u_xlat1.x = (u_xlat1.x * 1.442695));
+(u_xlat1.x = exp2(u_xlat1.x));
+(u_xlat0.x = ((u_xlat1.x * 0.25) + (-u_xlat0.x)));
+(u_xlat0.x = (u_xlat0.x * u_xlat6));
+(u_xlat6 = (u_xlat9 * u_xlat6));
+
+(u_xlat9 = ((u_xlat3 * 5.25) + -6.8000002));
+(u_xlat9 = ((u_xlat3 * u_xlat9) + 3.8299999));
+(u_xlat9 = ((u_xlat3 * u_xlat9) + 0.45899999));
+(u_xlat3 = ((u_xlat3 * u_xlat9) + -0.00287));
+(u_xlat3 = (u_xlat3 * 1.442695));
+(u_xlat3 = exp2(u_xlat3));
+(u_xlat9 = ((-_XSkyScale.w) * _XSkyScale.z));
+(u_xlat9 = (u_xlat9 * 1.442695));
+(u_xlat9 = exp2(u_xlat9));
+(u_xlat3 = (u_xlat3 * u_xlat9));
+(u_xlat0.x = ((u_xlat3 * 0.25) + u_xlat0.x));
+
+(u_xlat1.xyz = (_XSky4PI.www + _XSky4PI.xyz));
+(u_xlat0.xyw = ((-u_xlat0.xxx) * u_xlat1.xyz));
+(u_xlat0.xyw = (u_xlat0.xyw * vec3(1.442695, 1.442695, 1.442695)));
+(u_xlat0.xyw = exp2(u_xlat0.xyw));
+(u_xlat0.xyz = (vec3(u_xlat6) * u_xlat0.xyw));
+(u_xlat0.xyz = (u_xlat0.xyz * _XSkySunSkyColor.xyz));
+(u_xlat1.xyz = (u_xlat0.xyz * _XSkySun.xyz));
+(u_xlat0.xyz = (u_xlat0.xyz * _XSkySun.www));
+(vs_TEXCOORD2.xyz = (u_xlat0.xyz * _XSkyMieColor.xyz));
+(vs_TEXCOORD1.xyz = (u_xlat1.xyz * _XSkyRayleighColor.xyz));
+return ;
+}

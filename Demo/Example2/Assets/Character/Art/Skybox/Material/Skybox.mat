@@ -1,0 +1,99 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Skybox
+  m_Shader: {fileID: 4800000, guid: a5ea9ac2cccc23d4dada5df4920aa590, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 1999
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _BumpScale: 1
+    - _Cutoff: 0.5
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 0
+    - _GlossMapScale: 1
+    - _Glossiness: 0.5
+    - _GlossyReflections: 1
+    - _Metallic: 0
+    - _Mode: 0
+    - _OcclusionStrength: 1
+    - _Parallax: 0.02
+    - _SmoothnessTextureChannel: 0
+    - _SpecularHighlights: 1
+    - _SrcBlend: 1
+    - _UVSec: 0
+    - _XSceneGray: 0
+    - _XSkyBloom: 0
+    - _XSkyBrightness: 1
+    - _XSkyContrast: 2
+    - _XSkyFogginess: 0
+    - _XSkyMoonHaloPower: 50
+    - _XSkyTopColorBlend: 1
+    - _ZWrite: 1
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _XSceneDarkColor: {r: 0, g: 0, b: 0, a: 0}
+    - _XSky4PI: {r: 0.13245, g: 0.23809, b: 0.4937, a: 0.02513}
+    - _XSkyFogColor: {r: 1, g: 1, b: 1, a: 0}
+    - _XSkyGroundColor: {r: 0.01424, g: 0.45499, b: 0.88971, a: 0}
+    - _XSkyLocalMoonDirection: {r: -0.06781, g: -0.99357, b: -0.09065, a: 0}
+    - _XSkyLocalSunDirection: {r: 0.01243, g: 0.70215, b: -0.71192, a: 0}
+    - _XSkyMie: {r: 0.13227, g: 1.7569, b: -1.74, a: 0}
+    - _XSkyMieColor: {r: 0.53893, g: 0.81175, b: 0.82353, a: 0}
+    - _XSkyMoonHaloColor: {r: 1, g: 1, b: 1, a: 0}
+    - _XSkyMoonSkyColor: {r: 0.63354, g: 0.76944, b: 0.92647, a: 0}
+    - _XSkyRadius: {r: 1, g: 1, b: 1.025, a: 1.05062}
+    - _XSkyRayleighColor: {r: 0.81142, g: 0.90335, b: 0.98529, a: 0}
+    - _XSkyScale: {r: 40.00004, g: 0.25, b: 160.00015, a: 0.0001}
+    - _XSkySun: {r: 0.42161, g: 0.75786, b: 1.5715, a: 0.08}
+    - _XSkySunSkyColor: {r: 0.97647, g: 0.61961, b: 0.42353, a: 0}
+    - _XSkyTopColor: {r: 0.69853, g: 0.83168, b: 1, a: 0}

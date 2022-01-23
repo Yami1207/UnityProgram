@@ -1,0 +1,147 @@
+#version 330
+uniform vec4 hlslcc_mtx4x4unity_ObjectToWorld[4];
+uniform vec4 hlslcc_mtx4x4unity_WorldToObject[4];
+uniform vec4 hlslcc_mtx4x4unity_MatrixVP[4];
+uniform vec4 _XSphereLightCharacterA[3];
+uniform vec4 _XSphereLightCharacterB[3];
+in vec4 in_POSITION0;
+in vec3 in_NORMAL0;
+in vec4 in_TEXCOORD0;
+in vec4 in_TANGENT0;
+out vec4 vs_TEXCOORD0;
+out vec4 vs_TEXCOORD1;
+out vec4 vs_TEXCOORD2;
+out vec4 vs_TEXCOORD3;
+out vec3 vs_TEXCOORD5;
+out float vs_TEXCOORD6;
+vec4 u_xlat0;
+vec4 u_xlat1;
+vec3 u_xlat2;
+vec3 u_xlat3;
+vec4 u_xlat16_4;
+vec3 u_xlat16_5;
+vec3 u_xlat16_6;
+vec3 u_xlat16_7;
+float u_xlat16_12;
+vec3 u_xlat16_13;
+float u_xlat16_20;
+float u_xlat24;
+float u_xlat16_28;
+void main(){
+// u_xlat0: 世界坐标
+(u_xlat0 = (in_POSITION0.yyyy * hlslcc_mtx4x4unity_ObjectToWorld[1]));
+(u_xlat0 = ((hlslcc_mtx4x4unity_ObjectToWorld[0] * in_POSITION0.xxxx) + u_xlat0));
+(u_xlat0 = ((hlslcc_mtx4x4unity_ObjectToWorld[2] * in_POSITION0.zzzz) + u_xlat0));
+(u_xlat0 = ((hlslcc_mtx4x4unity_ObjectToWorld[3] * in_POSITION0.wwww) + u_xlat0));
+
+// u_xlat1: 视角投影坐标
+(u_xlat1 = (u_xlat0.yyyy * hlslcc_mtx4x4unity_MatrixVP[1]));
+(u_xlat1 = ((hlslcc_mtx4x4unity_MatrixVP[0] * u_xlat0.xxxx) + u_xlat1));
+(u_xlat1 = ((hlslcc_mtx4x4unity_MatrixVP[2] * u_xlat0.zzzz) + u_xlat1));
+(u_xlat1 = ((hlslcc_mtx4x4unity_MatrixVP[3] * u_xlat0.wwww) + u_xlat1));
+(gl_Position = u_xlat1);
+
+// u_xlat1: 视角投影z坐标
+(vs_TEXCOORD6 = u_xlat1.z);
+
+// vs_TEXCOORD0: uv
+(vs_TEXCOORD0.xy = in_TEXCOORD0.xy);
+(vs_TEXCOORD0.zw = vec2(0.0, 0.0));
+
+// u_xlat1: 切线
+(u_xlat1.z = dot(in_TANGENT0.xyz, hlslcc_mtx4x4unity_WorldToObject[0].xyz));
+(u_xlat1.x = dot(in_TANGENT0.xyz, hlslcc_mtx4x4unity_WorldToObject[1].xyz));
+(u_xlat1.y = dot(in_TANGENT0.xyz, hlslcc_mtx4x4unity_WorldToObject[2].xyz));
+(u_xlat24 = dot(u_xlat1.xyz, u_xlat1.xyz));
+(u_xlat24 = inversesqrt(u_xlat24));
+(u_xlat1.xyz = (vec3(u_xlat24) * u_xlat1.xyz));
+
+// vs_TEXCOORD1.xw
+(vs_TEXCOORD1.x = u_xlat1.z);
+(vs_TEXCOORD1.w = u_xlat0.x);
+
+// u_xlat2: 法线
+(u_xlat2.x = dot(in_NORMAL0.xyz, hlslcc_mtx4x4unity_WorldToObject[0].xyz));
+(u_xlat2.y = dot(in_NORMAL0.xyz, hlslcc_mtx4x4unity_WorldToObject[1].xyz));
+(u_xlat2.z = dot(in_NORMAL0.xyz, hlslcc_mtx4x4unity_WorldToObject[2].xyz));
+(u_xlat24 = dot(u_xlat2.xyz, u_xlat2.xyz));
+(u_xlat24 = inversesqrt(u_xlat24));
+(u_xlat2.xyz = (vec3(u_xlat24) * u_xlat2.xyz));
+
+// vs_TEXCOORD1 vs_TEXCOORD2 vs_TEXCOORD3: TBN矩阵
+(u_xlat3.xyz = (u_xlat1.xyz * u_xlat2.zxy));
+(u_xlat3.xyz = ((u_xlat2.yzx * u_xlat1.yzx) + (-u_xlat3.xyz)));
+(u_xlat3.xyz = (u_xlat3.xyz * in_TANGENT0.www));
+(vs_TEXCOORD1.y = u_xlat3.x);
+(vs_TEXCOORD1.z = u_xlat2.x);
+(vs_TEXCOORD2.x = u_xlat1.x);
+(vs_TEXCOORD3.x = u_xlat1.y);
+(vs_TEXCOORD2.y = u_xlat3.y);
+(vs_TEXCOORD3.y = u_xlat3.z);
+(vs_TEXCOORD2.w = u_xlat0.y);
+(vs_TEXCOORD2.z = u_xlat2.y);
+(vs_TEXCOORD3.w = u_xlat0.z);
+(vs_TEXCOORD3.z = u_xlat2.z);
+
+(u_xlat1.xyz = ((-u_xlat0.xyz) + _XSphereLightCharacterB[1].xyz));
+(u_xlat16_4.x = dot(u_xlat1.xyz, u_xlat1.xyz));
+(u_xlat16_12 = sqrt(u_xlat16_4.x));
+(u_xlat16_4.x = inversesqrt(u_xlat16_4.x));
+(u_xlat16_20 = (u_xlat16_12 + 1.0));
+(u_xlat16_20 = (u_xlat16_20 + (-_XSphereLightCharacterA[1].w)));
+(u_xlat16_20 = max(u_xlat16_20, 9.9999997e-06));
+(u_xlat16_20 = (1.0 / u_xlat16_20));
+(u_xlat16_20 = min(u_xlat16_20, 1.0));
+(u_xlat16_5.xyz = ((u_xlat1.xyz * u_xlat16_4.xxx) + (-u_xlat2.xyz)));
+(u_xlat16_6.xyz = (u_xlat1.xyz * u_xlat16_4.xxx));
+(u_xlat16_4.xzw = ((vec3(u_xlat16_20) * u_xlat16_5.xyz) + u_xlat2.xyz));
+(u_xlat16_4.x = dot(u_xlat16_6.xyz, u_xlat16_4.xzw));
+(u_xlat16_4.x = clamp(u_xlat16_4.x, 0.0, 1.0));
+(u_xlat16_20 = max(_XSphereLightCharacterB[1].w, 9.9999997e-06));
+(u_xlat16_12 = (u_xlat16_12 / u_xlat16_20));
+(u_xlat16_12 = min(u_xlat16_12, 1.0));
+(u_xlat16_12 = ((-u_xlat16_12) + 1.0));
+(u_xlat16_4.x = (u_xlat16_12 * u_xlat16_4.x));
+(u_xlat16_4.xyz = (u_xlat16_4.xxx * _XSphereLightCharacterA[1].xyz));
+(u_xlat1.xyz = ((-u_xlat0.xyz) + _XSphereLightCharacterB[0].xyz));
+(u_xlat0.xyz = ((-u_xlat0.xyz) + _XSphereLightCharacterB[2].xyz));
+(u_xlat16_28 = dot(u_xlat1.xyz, u_xlat1.xyz));
+(u_xlat16_5.x = sqrt(u_xlat16_28));
+(u_xlat16_28 = inversesqrt(u_xlat16_28));
+(u_xlat16_13.x = (u_xlat16_5.x + 1.0));
+(u_xlat16_13.x = (u_xlat16_13.x + (-_XSphereLightCharacterA[0].w)));
+(u_xlat16_13.x = max(u_xlat16_13.x, 9.9999997e-06));
+(u_xlat16_13.x = (1.0 / u_xlat16_13.x));
+(u_xlat16_13.x = min(u_xlat16_13.x, 1.0));
+(u_xlat16_6.xyz = ((u_xlat1.xyz * vec3(u_xlat16_28)) + (-u_xlat2.xyz)));
+(u_xlat16_7.xyz = (u_xlat1.xyz * vec3(u_xlat16_28)));
+(u_xlat16_13.xyz = ((u_xlat16_13.xxx * u_xlat16_6.xyz) + u_xlat2.xyz));
+(u_xlat16_28 = dot(u_xlat16_7.xyz, u_xlat16_13.xyz));
+(u_xlat16_28 = clamp(u_xlat16_28, 0.0, 1.0));
+(u_xlat16_13.x = max(_XSphereLightCharacterB[0].w, 9.9999997e-06));
+(u_xlat16_5.x = (u_xlat16_5.x / u_xlat16_13.x));
+(u_xlat16_5.x = min(u_xlat16_5.x, 1.0));
+(u_xlat16_5.x = ((-u_xlat16_5.x) + 1.0));
+(u_xlat16_28 = (u_xlat16_28 * u_xlat16_5.x));
+(u_xlat16_4.xyz = ((vec3(u_xlat16_28) * _XSphereLightCharacterA[0].xyz) + u_xlat16_4.xyz));
+(u_xlat16_28 = dot(u_xlat0.xyz, u_xlat0.xyz));
+(u_xlat16_5.x = inversesqrt(u_xlat16_28));
+(u_xlat16_28 = sqrt(u_xlat16_28));
+(u_xlat16_13.xyz = ((u_xlat0.xyz * u_xlat16_5.xxx) + (-u_xlat2.xyz)));
+(u_xlat16_6.xyz = (u_xlat0.xyz * u_xlat16_5.xxx));
+(u_xlat16_5.x = (u_xlat16_28 + 1.0));
+(u_xlat16_5.x = (u_xlat16_5.x + (-_XSphereLightCharacterA[2].w)));
+(u_xlat16_5.x = max(u_xlat16_5.x, 9.9999997e-06));
+(u_xlat16_5.x = (1.0 / u_xlat16_5.x));
+(u_xlat16_5.x = min(u_xlat16_5.x, 1.0));
+(u_xlat16_5.xyz = ((u_xlat16_5.xxx * u_xlat16_13.xyz) + u_xlat2.xyz));
+(u_xlat16_5.x = dot(u_xlat16_6.xyz, u_xlat16_5.xyz));
+(u_xlat16_5.x = clamp(u_xlat16_5.x, 0.0, 1.0));
+(u_xlat16_13.x = max(_XSphereLightCharacterB[2].w, 9.9999997e-06));
+(u_xlat16_28 = (u_xlat16_28 / u_xlat16_13.x));
+(u_xlat16_28 = min(u_xlat16_28, 1.0));
+(u_xlat16_28 = ((-u_xlat16_28) + 1.0));
+(u_xlat16_28 = (u_xlat16_28 * u_xlat16_5.x));
+(vs_TEXCOORD5.xyz = ((vec3(u_xlat16_28) * _XSphereLightCharacterA[2].xyz) + u_xlat16_4.xyz));
+return ;
+}

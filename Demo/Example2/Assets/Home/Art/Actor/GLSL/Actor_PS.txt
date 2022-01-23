@@ -1,0 +1,289 @@
+#version 330
+uniform vec3 _WorldSpaceCameraPos;
+uniform vec3 _XGlobalCharSpecularColor;
+uniform vec3 _XGlobalCharacterNoShadowColor;
+uniform vec3 _XGlobalCharacterOneShadowColor;
+uniform vec3 _XGlobalCharacterTwoShadowColor;
+uniform vec3 _XGlobalCharacterRimColor;
+uniform float _XGlobalCharacterShadowIntensity;
+uniform vec3 _XGlobalCharacterLightColor;
+uniform vec3 _XGlobalCharacterLightDir;
+uniform vec3 _XGlobalCharacterAmbientColor;
+uniform float _BloomFactor;
+uniform float _EmissionIntensity;
+uniform vec3 _EmissionColor;
+uniform float _EmissionBloomFactor;
+uniform float _XPostBloom;
+uniform vec4 _BloomModColor;
+uniform float _BloomModIntensity;
+uniform vec4 _LinearFogColor;
+uniform vec4 _LinearFogParams;
+uniform vec4 _AlbedoColor;
+uniform float _GlobalEnableDistanceRim;
+uniform vec3 _GlobalRimLightDir;
+uniform vec4 _MainTex_ST;
+uniform vec4 _MaskTex_ST;
+uniform vec4 _GlobalTint;
+uniform float _FirstShadow;
+uniform float _SecondShadow;
+uniform vec3 _FirstShadowColor;
+uniform vec3 _SecondShadowColor;
+uniform float _SpecularShiness;
+uniform float _SpecularIntensity;
+uniform vec3 _SpecularColor;
+uniform vec3 _NoShadowColor;
+uniform vec3 _SkinColor;
+uniform float _SkinIntensity;
+uniform float _SkinRate;
+uniform float _RimMax;
+uniform float _RimMin;
+uniform float _RimIntensity;
+uniform vec3 _RimColor;
+uniform float _RimThreshold;
+uniform float _RimDistanceMin;
+uniform float _RimDistanceMax;
+uniform vec4 _EffectRimColor;
+uniform float _EffectRimFading;
+uniform float _EffectRimTransparency;
+uniform sampler2D _MainTex;
+uniform sampler2D _FaceMap;
+uniform sampler2D _MaskTex;
+uniform sampler2D _SkinRamp;
+in vec4 vs_TEXCOORD0;
+in vec3 vs_TEXCOORD1;
+in float vs_TEXCOORD6;
+in vec4 vs_TEXCOORD2;
+in vec3 vs_TEXCOORD5;
+layout(location = 0) out vec4 SV_Target0;
+vec4 u_xlat0;
+vec4 u_xlat1;
+vec4 u_xlat16_1;
+bool u_xlatb1;
+vec4 u_xlat2;
+vec3 u_xlat3;
+vec3 u_xlat4;
+vec3 u_xlat5;
+vec3 u_xlat6;
+vec2 u_xlat7;
+vec4 u_xlat16_7;
+vec3 u_xlat16_8;
+vec3 u_xlat16_9;
+vec3 u_xlat11;
+vec3 u_xlat16_11;
+vec3 u_xlat12;
+float u_xlat21;
+float u_xlat22;
+float u_xlat32;
+float u_xlat16_33;
+void main(){
+// u_xlat0: baseColor
+(u_xlat0.xy = ((vs_TEXCOORD0.xy * _MainTex_ST.xy) + _MainTex_ST.zw));
+(u_xlat0 = texture(_MainTex, u_xlat0.xy));
+
+// u_xlat16_1: faceColor
+(u_xlat16_1 = texture(_FaceMap, vs_TEXCOORD0.zw));
+
+// u_xlat0: lerp(u_xlat0, u_xlat16_1, u_xlat16_1.a) * _AlbedoColor;
+(u_xlat1.xyz = ((-u_xlat0.xyz) + u_xlat16_1.xyz));
+(u_xlat0.xyz = ((u_xlat16_1.www * u_xlat1.xyz) + u_xlat0.xyz));
+(u_xlat0 = (u_xlat0 * _AlbedoColor));
+
+
+(u_xlat1.y = 0.5);
+
+// u_xlat2:lightDir
+(u_xlat21 = dot(_XGlobalCharacterLightDir.xyz, _XGlobalCharacterLightDir.xyz));
+(u_xlat21 = inversesqrt(u_xlat21));
+(u_xlat2.xyz = (vec3(u_xlat21) * _XGlobalCharacterLightDir.xyz));
+
+// u_xlat3: 法线
+(u_xlat21 = dot(vs_TEXCOORD1.xyz, vs_TEXCOORD1.xyz));
+(u_xlat21 = inversesqrt(u_xlat21));
+(u_xlat3.xyz = (vec3(u_xlat21) * vs_TEXCOORD1.xyz));
+
+// u_xlat1.x: NoL_01
+(u_xlat21 = dot(u_xlat3.xyz, u_xlat2.xyz));
+(u_xlat1.x = ((u_xlat21 * 0.5) + 0.5));
+
+// u_xlat11: SkinColor
+(u_xlat16_11.xyz = texture(_SkinRamp, u_xlat1.xy).xyz);
+(u_xlat11.xyz = (u_xlat0.xyz * u_xlat16_11.xyz));
+(u_xlat11.xyz = (u_xlat11.xyz * vec3(vec3(_SkinIntensity, _SkinIntensity, _SkinIntensity))));
+(u_xlat11.xyz = ((u_xlat11.xyz * _SkinColor.xyz) + (-u_xlat0.xyz)));
+(u_xlat11.xyz = ((vec3(_SkinRate) * u_xlat11.xyz) + u_xlat0.xyz));
+
+
+(u_xlat4.xyz = (u_xlat11.xyz * _NoShadowColor.xyz));
+(u_xlat4.xyz = (u_xlat4.xyz * _XGlobalCharacterNoShadowColor.xyz));
+
+(u_xlat5.xyz = (u_xlat11.xyz * _FirstShadowColor.xyz));
+(u_xlat6.xyz = ((u_xlat5.xyz * _XGlobalCharacterOneShadowColor.xyz) + (-u_xlat4.xyz)));
+(u_xlat5.xyz = (u_xlat5.xyz * _XGlobalCharacterOneShadowColor.xyz));
+
+// u_xlat16_7: Mask
+(u_xlat7.xy = ((vs_TEXCOORD0.xy * _MaskTex_ST.xy) + _MaskTex_ST.zw));
+(u_xlat16_7 = texture(_MaskTex, u_xlat7.xy));
+
+(u_xlat16_8.xy = ((-u_xlat16_7.yx) + vec2(1.5, 2.0)));
+(u_xlat32 = floor(u_xlat16_8.x));
+(u_xlat32 = ((-u_xlat32) + 1.0));
+
+(u_xlat16_8.xz = ((u_xlat16_7.yy * vec2(1.2, 1.25)) + vec2(-0.1, -0.12)));
+(u_xlat16_33 = ((-u_xlat16_8.z) + u_xlat16_8.x));
+(u_xlat32 = ((u_xlat32 * u_xlat16_33) + u_xlat16_8.z));
+(u_xlat32 = (u_xlat1.x + u_xlat32));
+
+// u_xlat1.x: secondShadowFactor
+(u_xlat1.x = (u_xlat1.x + u_xlat16_7.y));
+(u_xlat1.x = ((u_xlat1.x * 0.5) + 1.0));
+(u_xlat1.x = (u_xlat1.x + (-_SecondShadow)));
+(u_xlat1.x = floor(u_xlat1.x));
+(u_xlat1.x = ((-u_xlat1.x) + 1.0));
+(u_xlat1.x = (u_xlat1.x * _XGlobalCharacterShadowIntensity));
+
+// u_xlat32: firstFactor
+(u_xlat32 = ((u_xlat32 * 0.5) + 1.0));
+(u_xlat32 = (u_xlat32 + (-_FirstShadow)));
+(u_xlat32 = floor(u_xlat32));
+(u_xlat32 = ((-u_xlat32) + 1.0));
+(u_xlat32 = (u_xlat32 * _XGlobalCharacterShadowIntensity));
+
+// u_xlat4: lerp(noShadow, firstShadow, u_xlat32)
+(u_xlat4.xyz = ((vec3(u_xlat32) * u_xlat6.xyz) + u_xlat4.xyz));
+
+// u_xlat5: lerp(firstShadow, secondShadow, u_xlat1.x)
+(u_xlat6.xyz = (u_xlat11.xyz * _SecondShadowColor.xyz));
+(u_xlat6.xyz = ((u_xlat6.xyz * _XGlobalCharacterTwoShadowColor.xyz) + (-u_xlat5.xyz)));
+(u_xlat5.xyz = ((u_xlat1.xxx * u_xlat6.xyz) + u_xlat5.xyz));
+
+// u_xlat4: lerp(u_xlat4, u_xlat5, u_xlat1.x)
+(u_xlat5.xyz = ((-u_xlat4.xyz) + u_xlat5.xyz));
+(u_xlat1.x = (u_xlat16_7.y + 0.89999998));
+(u_xlat1.x = floor(u_xlat1.x));
+(u_xlat1.x = ((-u_xlat1.x) + 1.0));
+(u_xlat1.x = (u_xlat1.x * _XGlobalCharacterShadowIntensity));
+(u_xlat4.xyz = ((u_xlat1.xxx * u_xlat5.xyz) + u_xlat4.xyz));
+
+(u_xlat5.xyz = ((-vs_TEXCOORD2.xyz) + _WorldSpaceCameraPos.xyz));
+(u_xlat1.x = dot(u_xlat5.xyz, u_xlat5.xyz));
+(u_xlat1.x = inversesqrt(u_xlat1.x));
+(u_xlat2.xyz = ((u_xlat5.xyz * u_xlat1.xxx) + u_xlat2.xyz));
+
+// u_xlat5: viewDirection
+(u_xlat5.xyz = (u_xlat1.xxx * u_xlat5.xyz));
+
+// u_xlat16_1.x: NoV
+(u_xlat16_1.x = dot(u_xlat3.xyz, u_xlat5.xyz));
+
+// u_xlat2: H
+(u_xlat32 = dot(u_xlat2.xyz, u_xlat2.xyz));
+(u_xlat32 = inversesqrt(u_xlat32));
+(u_xlat2.xyz = (vec3(u_xlat32) * u_xlat2.xyz));
+
+// u_xlat2.x: NoH
+(u_xlat2.x = dot(u_xlat3.xyz, u_xlat2.xyz));
+(u_xlat2.x = clamp(u_xlat2.x, 0.0, 1.0));
+
+
+(u_xlat12.x = dot(u_xlat3.xyz, _GlobalRimLightDir.xyz));
+(u_xlat12.x = clamp(u_xlat12.x, 0.0, 1.0));
+
+
+(u_xlat2.x = max(u_xlat2.x, 9.9999997e-05));
+(u_xlat2.x = log2(u_xlat2.x));
+(u_xlat2.x = (u_xlat2.x * _SpecularShiness));
+(u_xlat2.x = exp2(u_xlat2.x));
+
+(u_xlat2.x = ((-u_xlat2.x) + u_xlat16_8.y));
+(u_xlat2.x = floor(u_xlat2.x));
+(u_xlat2.x = ((-u_xlat2.x) + 1.0));
+(u_xlat2.x = max(u_xlat2.x, 0.0));
+
+(u_xlat22 = (u_xlat16_7.z * _SpecularIntensity));
+
+// u_xlat11：高光
+(u_xlat11.xyz = (u_xlat11.xyz * vec3(u_xlat22)));
+(u_xlat11.xyz = (u_xlat11.xyz * vec3(_SpecularColor.x, _SpecularColor.y, _SpecularColor.z)));
+(u_xlat11.xyz = (u_xlat11.xyz * u_xlat2.xxx));
+
+// u_xlat11: Diffuse + Specular
+(u_xlat11.xyz = ((u_xlat11.xyz * _XGlobalCharSpecularColor.xyz) + u_xlat4.xyz));
+
+// 
+(u_xlat2.xzw = (vs_TEXCOORD2.xyz + (-_WorldSpaceCameraPos.xyz)));
+(u_xlat2.x = dot(u_xlat2.xzw, u_xlat2.xzw));
+
+(u_xlat2.x = (u_xlat2.x + (-_RimDistanceMin)));
+(u_xlat22 = ((-_RimDistanceMin) + _RimDistanceMax));
+(u_xlat22 = (1.0 / u_xlat22));
+(u_xlat2.x = (u_xlat22 * u_xlat2.x));
+(u_xlat2.x = clamp(u_xlat2.x, 0.0, 1.0));
+(u_xlat22 = ((u_xlat2.x * -2.0) + 3.0));
+(u_xlat2.x = (u_xlat2.x * u_xlat2.x));
+(u_xlat2.x = (u_xlat2.x * u_xlat22));
+
+(u_xlat2.x = ((_GlobalEnableDistanceRim * (-u_xlat2.x)) + 1.0));
+(u_xlat2.x = (u_xlat12.x * u_xlat2.x));
+
+(u_xlat12.x = u_xlat16_1.x);
+(u_xlat12.x = clamp(u_xlat12.x, 0.0, 1.0));
+(u_xlat12.x = ((-u_xlat12.x) + 1.0));
+(u_xlat12.x = (u_xlat12.x + (-_RimMin)));
+(u_xlat22 = (_RimMax + (-_RimMin)));
+(u_xlat22 = (1.0 / u_xlat22));
+(u_xlat12.x = (u_xlat22 * u_xlat12.x));
+(u_xlat12.x = clamp(u_xlat12.x, 0.0, 1.0));
+(u_xlat22 = (u_xlat12.x * u_xlat12.x));
+(u_xlat12.x = ((u_xlat12.x * -2.0) + 3.0));
+(u_xlat12.x = (u_xlat12.x * u_xlat22));
+
+(u_xlat12.x = (u_xlat12.x * _RimIntensity));
+(u_xlat22 = (u_xlat16_1.x + _RimThreshold));
+
+(u_xlat16_9.x = ((-abs(u_xlat16_1.x)) + 1.0));
+(u_xlat16_9.x = max(u_xlat16_9.x, 0.001));
+(u_xlat16_9.x = log2(u_xlat16_9.x));
+(u_xlat16_9.x = (u_xlat16_9.x * _EffectRimFading));
+(u_xlat16_9.x = exp2(u_xlat16_9.x));
+(u_xlat16_9.xyz = (u_xlat16_9.xxx * _EffectRimColor.xyz));
+
+(u_xlatb1 = (u_xlat22 >= 0.0));
+(u_xlat1.x = ((u_xlatb1) ? (1.0) : (0.0)));
+(u_xlat1.x = (u_xlat1.x * u_xlat12.x));
+
+(u_xlat12.xyz = (u_xlat1.xxx * _RimColor.xyz));
+(u_xlat12.xyz = (u_xlat12.xyz * _XGlobalCharacterRimColor.xyz));
+(u_xlat1.xyz = ((u_xlat2.xxx * u_xlat12.xyz) + u_xlat11.xyz));
+
+(u_xlat1.xyz = (u_xlat1.xyz * _XGlobalCharacterLightColor.xyz));
+(u_xlat1.xyz = ((u_xlat1.xyz * vs_TEXCOORD5.xyz) + u_xlat1.xyz));
+
+// bloom系数
+(u_xlat1.w = (u_xlat0.w * _BloomFactor));
+
+// u_xlat0:自发光
+(u_xlat0.xyz = (u_xlat0.xyz * vec3(_EmissionIntensity)));
+(u_xlat0.xyz = (u_xlat0.xyz * vec3(_EmissionColor.x, _EmissionColor.y, _EmissionColor.z)));
+(u_xlat0.xyz = (u_xlat16_7.www * u_xlat0.xyz));
+
+(u_xlat2.x = ((-_BloomFactor) + _EmissionBloomFactor));
+(u_xlat0.w = ((u_xlat2.x * u_xlat16_7.w) + _BloomFactor));
+(u_xlat0 = (u_xlat0 + u_xlat1));
+(u_xlat16_9.xyz = ((vec3(vec3(_EffectRimTransparency, _EffectRimTransparency, _EffectRimTransparency)) * u_xlat16_9.xyz) + u_xlat0.xyz));
+(u_xlat0.w = max(u_xlat0.w, 0.0));
+(u_xlat1.xyz = (_XGlobalCharacterAmbientColor.xyz * _GlobalTint.xyz));
+(u_xlat1.xyz = (u_xlat1.xyz * u_xlat16_9.xyz));
+
+// mix bloom color
+(u_xlat2.xyz = (u_xlat1.xyz * _BloomModColor.xyz));
+(u_xlat2.xyz = ((u_xlat2.xyz * vec3(_BloomModIntensity)) + (-u_xlat1.xyz)));
+(u_xlat0.xyz = ((vec3(vec3(_XPostBloom, _XPostBloom, _XPostBloom)) * u_xlat2.xyz) + u_xlat1.xyz));
+
+// fog
+(u_xlat0 = (u_xlat0 + (-_LinearFogColor)));
+(u_xlat1.x = max(vs_TEXCOORD6, 0.0));
+(u_xlat1.x = ((u_xlat1.x * _LinearFogParams.x) + _LinearFogParams.y));
+(u_xlat1.x = clamp(u_xlat1.x, 0.0, 1.0));
+(SV_Target0 = ((u_xlat1.xxxx * u_xlat0) + _LinearFogColor));
+return ;
+}

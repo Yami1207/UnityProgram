@@ -1,0 +1,10 @@
+#version 330
+uniform float _BloomFactor;
+layout(location = 0) out vec4 SV_Target0;
+vec4 u_xlat0;
+void main(){
+(u_xlat0.x = 0.0);
+(u_xlat0.w = _BloomFactor);
+(SV_Target0 = u_xlat0.xxxw);
+return ;
+}

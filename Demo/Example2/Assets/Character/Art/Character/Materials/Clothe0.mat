@@ -1,0 +1,146 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Clothe0
+  m_Shader: {fileID: 4800000, guid: d9975d153d88f5047bdc6123039f5fb6, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BaseTex:
+        m_Texture: {fileID: 2800000, guid: c0418412a673cb042a1c08a5bf3f42f4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _CubeMap:
+        m_Texture: {fileID: 8900000, guid: 8199d95d9ea0eec4ca77429b32743612, type: 2}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMap:
+        m_Texture: {fileID: 2800000, guid: efbd989dcf1944542b2e7b4b211dc72d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MaskTex:
+        m_Texture: {fileID: 2800000, guid: 208b71728be61dd47967661381979872, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalTex:
+        m_Texture: {fileID: 2800000, guid: 58e8c3525d4e90746bdc5e00a1067420, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PBRMask:
+        m_Texture: {fileID: 2800000, guid: 6c17efe403525224792da02dd7be38c7, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _AOScale: 1
+    - _BloomFactor: 0.06
+    - _BloomModIntensity: 1
+    - _BumpScale: 1
+    - _CubemapIntensity: 1
+    - _Cutoff: 0.5
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 0
+    - _EffectRimFading: 0
+    - _EffectRimTransparency: 0
+    - _EmissionBloomFactor: 3
+    - _EmissionIntensity: 2
+    - _FirstShadow: 0.51
+    - _GlossMapScale: 1
+    - _Glossiness: 0.5
+    - _GlossyReflections: 1
+    - _IndirectLightIntensity: 1
+    - _Metallic: 0
+    - _MetallicMapScale: 1
+    - _Mode: 0
+    - _OcclusionStrength: 1
+    - _OutlineBloom: 0.1
+    - _PBRRate: 3
+    - _PBRSpecularIntensity: 0.2
+    - _Parallax: 0.02
+    - _RimDistanceMax: 11
+    - _RimDistanceMin: 8
+    - _RimIntensity: 0.15
+    - _RimMax: 0.661
+    - _RimMin: 0.647
+    - _RimThreshold: 1
+    - _RoughnessMapScale: 1
+    - _SecondShadow: 0.51
+    - _SmoothFactor: 0.016
+    - _SmoothnessTextureChannel: 0
+    - _SpecularHighlights: 1
+    - _SpecularIntensity: 2
+    - _SpecularShiness: 5
+    - _SrcBlend: 1
+    - _UVSec: 0
+    - _ZWrite: 1
+    m_Colors:
+    - _AlbedoColor: {r: 1, g: 1, b: 1, a: 1}
+    - _BloomModColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _CubemapColor: {r: 1, g: 1, b: 1, a: 1}
+    - _DirectLightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _EffectRimColor: {r: 0, g: 0, b: 0, a: 0}
+    - _EmissionColor: {r: 1, g: 0.52252, b: 0.95694, a: 1}
+    - _FirstShadowColor: {r: 0.34562, g: 0.33493, b: 0.33493, a: 1}
+    - _IndirectLightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _MeshShadowColor: {r: 1, g: 1, b: 1, a: 1}
+    - _NoShadowColor: {r: 1, g: 1, b: 1, a: 1}
+    - _OutlineColor: {r: 0, g: 0, b: 0, a: 0.3}
+    - _PBRSpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _RimColor: {r: 0.57398, g: 0.65827, b: 0.95761, a: 1}
+    - _SecondShadowColor: {r: 0.3467, g: 0.33716, b: 0.33716, a: 1}
+    - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []

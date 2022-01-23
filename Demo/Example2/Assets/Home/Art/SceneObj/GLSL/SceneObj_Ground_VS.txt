@@ -1,0 +1,42 @@
+#version 330
+uniform vec4 _ProjectionParams;
+uniform vec4 hlslcc_mtx4x4unity_ObjectToWorld[4];
+uniform vec4 hlslcc_mtx4x4unity_WorldToObject[4];
+uniform vec4 hlslcc_mtx4x4unity_MatrixVP[4];
+in vec4 in_POSITION0;
+in vec2 in_TEXCOORD0;
+in vec3 in_NORMAL0;
+out vec4 vs_TEXCOORD0;
+out vec3 vs_TEXCOORD2;
+out float vs_TEXCOORD5;
+out vec4 vs_TEXCOORD3;
+out vec4 vs_TEXCOORD8;
+vec4 u_xlat0;
+vec4 u_xlat1;
+float u_xlat7;
+void main(){
+(u_xlat0 = (in_POSITION0.yyyy * hlslcc_mtx4x4unity_ObjectToWorld[1]));
+(u_xlat0 = ((hlslcc_mtx4x4unity_ObjectToWorld[0] * in_POSITION0.xxxx) + u_xlat0));
+(u_xlat0 = ((hlslcc_mtx4x4unity_ObjectToWorld[2] * in_POSITION0.zzzz) + u_xlat0));
+(u_xlat1 = (u_xlat0 + hlslcc_mtx4x4unity_ObjectToWorld[3]));
+(vs_TEXCOORD3 = ((hlslcc_mtx4x4unity_ObjectToWorld[3] * in_POSITION0.wwww) + u_xlat0));
+(u_xlat0 = (u_xlat1.yyyy * hlslcc_mtx4x4unity_MatrixVP[1]));
+(u_xlat0 = ((hlslcc_mtx4x4unity_MatrixVP[0] * u_xlat1.xxxx) + u_xlat0));
+(u_xlat0 = ((hlslcc_mtx4x4unity_MatrixVP[2] * u_xlat1.zzzz) + u_xlat0));
+(u_xlat0 = ((hlslcc_mtx4x4unity_MatrixVP[3] * u_xlat1.wwww) + u_xlat0));
+(gl_Position = u_xlat0);
+(vs_TEXCOORD0.xy = in_TEXCOORD0.xy);
+(vs_TEXCOORD0.zw = vec2(0.0, 0.0));
+(u_xlat1.x = dot(in_NORMAL0.xyz, hlslcc_mtx4x4unity_WorldToObject[0].xyz));
+(u_xlat1.y = dot(in_NORMAL0.xyz, hlslcc_mtx4x4unity_WorldToObject[1].xyz));
+(u_xlat1.z = dot(in_NORMAL0.xyz, hlslcc_mtx4x4unity_WorldToObject[2].xyz));
+(u_xlat7 = dot(u_xlat1.xyz, u_xlat1.xyz));
+(u_xlat7 = inversesqrt(u_xlat7));
+(vs_TEXCOORD2.xyz = (vec3(u_xlat7) * u_xlat1.xyz));
+(vs_TEXCOORD5 = u_xlat0.z);
+(u_xlat0.y = (u_xlat0.y * _ProjectionParams.x));
+(u_xlat1.xzw = (u_xlat0.xwy * vec3(0.5, 0.5, 0.5)));
+(vs_TEXCOORD8.zw = u_xlat0.zw);
+(vs_TEXCOORD8.xy = (u_xlat1.zz + u_xlat1.xw));
+return ;
+}
